@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Appointment - MediBook</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="styles-enhanced.css" rel="stylesheet">
+</xai:function_call}
+
+
+
+<xai:function_call name="edit_file">
+<parameter name="path">c:/Users/sahil/Desktop/FEP DUPLICATE/book.html
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html"><i class="bi bi-heart-pulse-fill"></i> MediBook</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+<li class="nav-item"><a class="nav-link" href="doctors.html">Doctors</a></li>
+          <li class="nav-item"><a class="nav-link" href="book.html">Book New</a></li>
+          <li class="nav-item"><a class="nav-link" href="profile.html">Profile</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" onclick="logoutUser()">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-5">
+<a href="profile.html" class="btn btn-outline-secondary mb-4">&larr; Back to Appointments</a>
+    
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="card shadow">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="bi bi-calendar-plus"></i> Book New Appointment</h5>
+          </div>
+        <div class="card-body">
+            <!-- Doctor Preview Carousel -->
+            <div id="doctorPreviewCarousel" class="carousel slide mb-4 d-none" data-bs-interval="false">
+              <div class="carousel-inner" id="doctorPreview"></div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#doctorPreviewCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#doctorPreviewCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+              </button>
+            </div>
+            
+            <form id="bookForm">
+              <div class="mb-4">
+                <label class="form-label fw-bold">Department <span class="text-danger">*</span></label>
+                <select class="form-select form-select-lg" id="dept" required>
+                  <option value="">Select your department</option>
+                  <option value="Cardiology">❤️ Cardiology</option>
+                  <option value="Neurology">🧠 Neurology</option>
+                  <option value="Orthopedics">🦴 Orthopedics</option>
+                  <option value="Dermatology">✨ Dermatology</option>
+                  <option value="Pediatrics">👶 Pediatrics</option>
+                </select>
+              </div>
+              <div class="mb-4">
+                <label class="form-label fw-bold">Doctor <span class="text-danger">*</span></label>
+                <select class="form-select form-select-lg" id="doctor" required>
+                  <option value="">Choose doctor (after selecting department)</option>
+                </select>
+              </div>
+              <div class="row g-3 mb-4">
+                <div class="col-md-7">
+                  <label class="form-label fw-bold">Date <span class="text-danger">*</span></label>
+                  <input type="date" class="form-control form-control-lg" id="date" required>
+                </div>
+                <div class="col-md-5">
+                  <label class="form-label fw-bold">Time <span class="text-danger">*</span></label>
+                  <select class="form-select form-select-lg" id="time" required>
+                    <option value="">Select time</option>
+                    <option value="09:00">09:00 AM</option>
+                    <option value="10:00">10:00 AM</option>
+                    <option value="11:00">11:00 AM</option>
+                    <option value="12:00">12:00 PM</option>
+                    <option value="14:00">02:00 PM</option>
+                    <option value="15:00">03:00 PM</option>
+                    <option value="16:00">04:00 PM</option>
+                    <option value="17:00">05:00 PM</option>
+                  </select>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-success btn-lg w-100">
+                <i class="bi bi-calendar-check"></i> Book Appointment Now
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+  <script>
+    // Doctors data with previews
+    const doctorsByDept = {
+      'Cardiology': [
+        {name: 'Dr. Smith', specialty: 'Cardiologist (15+ years)', avatar: 'DS'},
+        {name: 'Dr. Johnson', specialty: 'Interventional Cardiology', avatar: 'DJ'},
+        {name: 'Dr. Lee', specialty: 'Pediatric Cardiology', avatar: 'DL'}
+      ],
+      'Neurology': [
+        {name: 'Dr. Brown', specialty: 'Stroke & Epilepsy', avatar: 'DB'},
+        {name: 'Dr. Davis', specialty: 'Multiple Sclerosis', avatar: 'DD'},
+        {name: 'Dr. Wilson', specialty: 'Headache Medicine', avatar: 'DW'}
+      ],
+      'Orthopedics': [
+        {name: 'Dr. Taylor', specialty: 'Joint Replacement', avatar: 'DT'},
+        {name: 'Dr. Anderson', specialty: 'Spine Surgery', avatar: 'DA'},
+        {name: 'Dr. Thomas', specialty: 'Sports Medicine', avatar: 'TT'}
+      ],
+      'Dermatology': [
+        {name: 'Dr. White', specialty: 'Skin Cancer', avatar: 'DW'},
+        {name: 'Dr. Harris', specialty: 'Cosmetic Dermatology', avatar: 'DH'},
+        {name: 'Dr. Martin', specialty: 'Acne Treatment', avatar: 'DM'}
+      ],
+      'Pediatrics': [
+        {name: 'Dr. Garcia', specialty: 'Child Healthcare', avatar: 'DG'},
+        {name: 'Dr. Miller', specialty: 'Vaccinations', avatar: 'DM'},
+        {name: 'Dr. Jones', specialty: 'Growth Development', avatar: 'DJ'}
+      ]
+    };
+
+    // Dept change - update doctors dropdown & preview carousel
+    document.getElementById('dept').addEventListener('change', (e) => {
+      const dept = e.target.value;
+      const doctorSelect = document.getElementById('doctor');
+      const previewCarousel = document.getElementById('doctorPreview');
+      
+      doctorSelect.innerHTML = '<option value="">Choose doctor</option>';
+      if (previewCarousel) previewCarousel.innerHTML = '';
+      
+      if (doctorsByDept[dept] && doctorsByDept[dept].length) {
+        doctorsByDept[dept].forEach((doc, index) => {
+          // Add to dropdown
+          doctorSelect.insertAdjacentHTML('beforeend', `<option value="${doc.name}">${doc.name}</option>`);
+          
+          // Add to carousel preview
+          const itemClass = index === 0 ? 'carousel-item active' : 'carousel-item';
+          previewCarousel.insertAdjacentHTML('beforeend', `
+            <div class="carousel-item ${itemClass}">
+              <div class="text-center p-4">
+                <div class="avatar mb-3 mx-auto" style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: white; font-weight: bold;">${doc.avatar}</div>
+                <h6>${doc.name}</h6>
+                <p class="text-muted small">${doc.specialty}</p>
+              </div>
+            </div>
+          `);
+        });
+        
+        // Initialize carousel if exists
+        const carousel = new bootstrap.Carousel(previewCarousel.closest('.carousel'));
+      }
+    });
+
+    // Date validation with calendar picker mock
+    document.getElementById('date').addEventListener('change', (e) => {
+      const date = new Date(e.target.value);
+      const today = new Date().toISOString().split('T')[0];
+      if (date < today) {
+        showAlert('Please select a future date.', 'warning');
+        e.target.value = '';
+      } else {
+        e.target.style.borderColor = 'var(--secondary-color)';
+      }
+    });
+
+    // Form submit with loading spinner
+    document.getElementById('bookForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Booking...';
+      submitBtn.disabled = true;
+      
+      loadCurrentUser();
+      if (!currentUser) {
+        showAlert('Please login first!', 'warning');
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+        setTimeout(() => window.location.href = 'login.html', 1500);
+        return;
+      }
+      
+      const dept = document.getElementById('dept').value;
+      const doctor = document.getElementById('doctor').value;
+      const date = document.getElementById('date').value;
+      const time = document.getElementById('time').value;
+      
+      setTimeout(() => {  // Simulate network delay
+        if (bookAppointment(dept, doctor, date, time)) {
+          showAlert('Appointment booked successfully! Redirecting...', 'success');
+          setTimeout(() => window.location.href = 'profile.html', 1500);
+        } else {
+          showAlert('Booking failed. Please try again.', 'danger');
+          submitBtn.innerHTML = originalText;
+          submitBtn.disabled = false;
+        }
+      }, 2000);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - MediBook</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="styles-enhanced.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Navbar -->
+  <!-- Navbar - Consistent -->
+  <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand fw-bold fs-3" href="index.html">
+        <i class="bi bi-heart-pulse-fill text-primary"></i> MediBook
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="doctors.html">Doctors</a></li>
+          <li class="nav-item"><a class="nav-link" href="book.html">Book</a></li>
+          <li class="nav-item" id="navUser" style="display: none;"><a class="nav-link" href="#" onclick="logoutUser()">Logout</a></li>
+          <li class="nav-item" id="navLogin"><a class="nav-link" href="login.html">Login</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-5">
+    <h1><i class="bi bi-person-circle"></i> Profile & History</h1>
+    
+    <div class="row g-4">
+      <!-- Profile Card -->
+      <div class="col-md-4">
+        <div class="card shadow h-100">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Your Profile</h5>
+          </div>
+          <div class="card-body">
+            <p><strong>Name:</strong> <span id="profName"></span></p>
+            <p><strong>Email:</strong> <span id="profEmail"></span></p>
+            <!-- Edit not implemented for simplicity -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Appointments History -->
+      <div class="col-md-8">
+        <div class="card shadow">
+          <div class="card-header">
+            <h5 class="mb-0"><i class="bi bi-clock-history"></i> Appointment History</h5>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover reveal">
+                <thead class="table-dark">
+                  <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Department</th>
+                    <th>Doctor</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="historyTable">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+            <div id="noHistory" class="text-center text-muted py-4 reveal">
+              <i class="bi bi-calendar-x fs-1 mb-3 text-muted"></i>
+              <h5>No appointments yet</h5>
+              <p class="lead">Book your first appointment with our expert doctors!</p>
+              <a href="book.html" class="btn btn-primary btn-lg mt-3 reveal">
+                <i class="bi bi-calendar-plus"></i> Book Now
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      loadCurrentUser();
+      updateNavbar();
+      if (!currentUser) {
+        window.location.href = 'login.html';
+        return;
+      }
+      
+      document.getElementById('profName').textContent = currentUser.name;
+      document.getElementById('profEmail').textContent = currentUser.email;
+
+      const appts = getUserAppointments();
+      const tbody = document.getElementById('historyTable');
+      const noHistoryDiv = document.getElementById('noHistory');
+      
+      if (appts.length === 0) {
+        noHistoryDiv.style.display = 'block';
+        tbody.innerHTML = '';
+      } else {
+        noHistoryDiv.style.display = 'none';
+        appts.forEach(appt => {
+          const statusClass = appt.status === 'pending' ? 'badge-pending' : 
+                             appt.status === 'confirmed' ? 'badge-confirmed' : 'badge-cancelled';
+          const statusBadge = `<span class="badge ${statusClass}">${appt.status.toUpperCase()}</span>`;
+          const row = `
+            <tr>
+              <td>${new Date(appt.date).toLocaleDateString()}</td>
+              <td>${appt.time}</td>
+              <td>${appt.dept}</td>
+              <td>${appt.doctor}</td>
+              <td>${statusBadge}</td>
+              <td>
+                <button class="btn btn-sm btn-outline-danger" onclick="confirmDelete(${appt.id}, deleteAppointment)">
+                  <i class="bi bi-trash"></i> Cancel
+                </button>
+              </td>
+            </tr>
+          `;
+          tbody.insertAdjacentHTML('beforeend', row);
+        });
+      }
+      
+      // Scroll reveals
+      initScrollReveals();
+    });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      loadCurrentUser();
+      if (!currentUser) {
+        window.location.href = 'login.html';
+        return;
+      }
+      
+      document.getElementById('profName').textContent = currentUser.name;
+      document.getElementById('profEmail').textContent = currentUser.email;
+
+      const appts = getUserAppointments();
+      const tbody = document.getElementById('historyTable');
+      const noHistoryDiv = document.getElementById('noHistory');
+      if (appts.length === 0) {
+        noHistoryDiv.style.display = 'block';
+        tbody.innerHTML = '';
+      } else {
+        noHistoryDiv.style.display = 'none';
+        appts.forEach(appt => {
+          const statusBadge = `<span class="badge badge-${appt.status}">${appt.status.charAt(0).toUpperCase() + appt.status.slice(1)}</span>`;
+          const row = `
+            <tr>
+              <td>${new Date(appt.date).toLocaleDateString()}</td>
+              <td>${appt.time}</td>
+              <td>${appt.dept}</td>
+              <td>${appt.doctor}</td>
+              <td>${statusBadge}</td>
+            </tr>
+          `;
+          tbody.insertAdjacentHTML('beforeend', row);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

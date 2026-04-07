@@ -1,0 +1,178 @@
+/* Healthcare Appointment Management System - Custom Styles */
+:root {
+  --primary-color: #007bff; /* Blue */
+  --secondary-color: #28a745; /* Green */
+  --danger-color: #dc3545; /* Red */
+  --light-bg: #f8f9fa;
+  --white: #ffffff;
+  --shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: var(--light-bg);
+}
+
+.navbar {
+  box-shadow: var(--shadow);
+  background-color: var(--white) !important;
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: var(--white);
+  padding: 100px 0;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.card {
+  box-shadow: var(--shadow);
+  border: none;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-success {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+.btn-danger {
+  background-color: var(--danger-color);
+  border-color: var(--danger-color);
+}
+
+.table {
+  background-color: var(--white);
+}
+
+.form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.alert {
+  border-radius: 10px;
+}
+
+.modal-header {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+}
+
+/* Appointment status badges */
+.badge-pending { background-color: #ffc107; color: #000; }
+.badge-confirmed { background-color: var(--secondary-color); }
+.badge-cancelled { background-color: var(--danger-color); }
+
+/* New sections styles */
+.doctor-card {
+  transition: all 0.3s ease;
+}
+
+.doctor-card {\n  border: none;\n  box-shadow: var(--shadow);\n  transition: all 0.3s ease;\n}\n\n.doctor-card:hover {\n  transform: translateY(-10px);\n  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;\n}\n\n.doctor-card .avatar {\n  box-shadow: var(--shadow);\n}\n\n.doctors-hero {\n  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));\n}
+
+.doctor-card .card-img-top {
+  border: 4px solid var(--primary-color);
+}
+
+#about img {
+  max-height: 400px;
+  object-fit: cover;
+}
+
+/* Contact Section Styles */
+#contact {
+  background: linear-gradient(to bottom, var(--light-bg), #e9ecef);
+}
+
+#contact h2 {
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+#contact .bi {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+#contact h4:hover .bi,
+#contact p:hover .bi {
+  transform: scale(1.1);
+}
+
+#contact form .form-control {
+  background-color: rgba(255,255,255,0.95);
+  border: 2px solid #e9ecef;
+  transition: all 0.3s ease;
+}
+
+#contact form .form-control:focus {
+  background-color: var(--white);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.25rem rgba(0,123,255,0.15);
+  transform: translateY(-2px);
+}
+
+#contact form label {
+  font-weight: 600;
+  color: #495057;
+}
+
+#contact .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+#contact hr {
+  border-color: rgba(0,123,255,0.2);
+}
+
+/* Contact responsive */
+@media (max-width: 992px) {
+  #contact .row.g-5 > div {
+    margin-bottom: 2rem;
+  }
+  
+  #contact .text-lg-start {
+    text-align: center !important;
+  }
+}
+
+@media (max-width: 768px) {
+  #about .row > div {
+    text-align: center;
+  }
+  
+  .doctor-card .card-img-top {
+    width: 120px;
+    height: 120px;
+  }
+  
+  #contact h2 {
+    font-size: 2rem;
+  }
+}
